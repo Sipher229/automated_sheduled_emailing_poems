@@ -9,6 +9,13 @@ from dotenv import load_dotenv
 import smtplib
 import ssl
 from Poem import Poem
+from selenium.webdriver.chrome.options import Options
+
+
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Required on GitHub Actions
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
 
 load_dotenv()
 
@@ -19,7 +26,7 @@ def get_poem_links(content_url: str) -> list:
     print("getting poem_links...")
 
     try:
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(chrome_options)
         driver.get(content_url)
         poem_link_elements = driver.find_elements(By.CLASS_NAME, "phLink")
         poem_links = [link.find_element(By.TAG_NAME, "a").get_property("href") for link in poem_link_elements]
@@ -37,7 +44,7 @@ def get_sent_poems_number() -> int:
 
 
 def get_poem(poem_links: list, poems_number: int) -> Poem:
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(chrome_options)
     if len(poem_links) != 0:
 
         try:
@@ -56,7 +63,7 @@ def get_poem(poem_links: list, poems_number: int) -> Poem:
 
 def get_email_subject():
     print("getting email subject")
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(chrome_options)
     driver.get("https://www.wishesmsg.com/sweet-things-to-say-to-girlfriend/")
     subject_lines = driver.find_elements(By.CLASS_NAME, "m")
 
