@@ -68,7 +68,6 @@ def get_email_subject():
     subject_lines = driver.find_elements(By.CLASS_NAME, "m")
 
     subject_lines = [subj.text for subj in subject_lines]
-    print("subject list: " + str(subject_lines))
     return choice(subject_lines)
 
 
