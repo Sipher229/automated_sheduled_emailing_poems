@@ -123,10 +123,10 @@ def send_poem() -> None:
 def send_email(recipient: str, subject: str, content: str, poem_title: str) -> bool:
     msg = MIMEMultipart("related")
 
-    smtp_port = os.getenv("SMTP_PORT")
-    host = os.getenv("HOST")
-    username = os.getenv("USER")
-    password = os.getenv("PASS")
+    smtp_port = os.environ["SMTP_PORT"]
+    host = os.environ["HOST"]
+    username = os.environ["USER"]
+    password = os.environ["PASS"]
     context = ssl.create_default_context()
 
     try:
