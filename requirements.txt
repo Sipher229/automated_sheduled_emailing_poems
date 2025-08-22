@@ -1,4 +1,4 @@
 selenium==4.21.0
-dotenv
+python-dotenv
 ssl
 smtplib
