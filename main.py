@@ -114,15 +114,15 @@ def send_poem() -> None:
         poem.content,
         poem.title
     )
-    send_email(
-        MY_EMAIL,
-        email_subject,
-        poem.content,
-        poem.title
-    )  # send the same poem to my email
     if email_sent:
         add_poem_to_file("sent_poems.txt", poem_link=poem_links[poems_number])
         print("Email sent successfully")
+        send_email(
+            MY_EMAIL,
+            email_subject,
+            poem.content,
+            poem.title
+        )  # send the same poem to my email
     else:
         print("failed to send email")
 
