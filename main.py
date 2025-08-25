@@ -19,7 +19,8 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 
 load_dotenv()
 
-RECIPIENT = os.getenv("RECIPIENT")
+RECIPIENT = os.environ["RECIPIENT"]
+MY_EMAIL = os.environ["MY_EMAIL"]
 
 
 def get_poem_links(content_url: str) -> list:
@@ -106,12 +107,19 @@ def send_poem() -> None:
     poem_links = get_poem_links("https://www.poemhunter.com/poems/love/")
     poems_number = get_sent_poems_number()
     poem = get_poem(poem_links, poems_number)
+    email_subject = get_email_subject()
     email_sent = send_email(
         RECIPIENT,
-        get_email_subject(),
+        email_subject,
         poem.content,
         poem.title
     )
+    send_email(
+        MY_EMAIL,
+        email_subject,
+        poem.content,
+        poem.title
+    )  # send the same poem to my email
     if email_sent:
         add_poem_to_file("sent_poems.txt", poem_link=poem_links[poems_number])
         print("Email sent successfully")
