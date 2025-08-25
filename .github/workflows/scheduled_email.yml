@@ -31,4 +31,5 @@ jobs:
         HOST: ${{ secrets.HOST }}
         RECIPIENT: ${{ secrets.RECIPIENT}}
         SMTP_PORT: ${{ secrets.SMTP_PORT}}
+        MY_EMAIL: ${{ secrets.MY_EMAIL}}
       run: python main.py
