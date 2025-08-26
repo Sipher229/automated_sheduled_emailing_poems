@@ -9,9 +9,14 @@ jobs:
   send_email:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write  # give workflow write access
+
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -40,5 +45,5 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add sent_poems.txt
           git commit -m "Update poem log [skip ci]" || echo "No changes to commit"
-          git push
+          git push origin HEAD: ${GITHUB_REF}
 
