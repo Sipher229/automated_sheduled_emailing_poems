@@ -33,3 +33,12 @@ jobs:
         SMTP_PORT: ${{ secrets.SMTP_PORT}}
         MY_EMAIL: ${{ secrets.MY_EMAIL}}
       run: python main.py
+
+    - name: commit and push changes to sent_poems.txt
+      run: | 
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add sent_poems.txt
+          git commit -m "Update poem log [skip ci]" || echo "No changes to commit"
+          git push
+
