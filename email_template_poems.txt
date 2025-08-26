@@ -83,7 +83,7 @@
     <div class="container">
       <div class="header">The world deserves to see that smile!</div>
       <div class="hero">
-        <img class="img-size" height="600" width="400" src="https://picsum.photos/1200/700?random=22" alt="Romantic Scene" loading="lazy" onerror="this.src='https://via.placeholder.com/600x400?text=Romantic+Scene'">
+        <img class="img-size" height="600" width="400" src="https://picsum.photos/1200/700?random=[random_num]" alt="Romantic Scene" loading="lazy" onerror="this.src='https://via.placeholder.com/600x400?text=Romantic+Scene'">
       </div>
       <div class="content">
         <h2>[poem title]</h2>

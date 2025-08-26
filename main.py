@@ -1,6 +1,8 @@
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from random import choice
+from random import randint
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
@@ -135,12 +137,14 @@ def send_email(recipient: str, subject: str, content: str, poem_title: str) -> b
     username = os.environ["USER"]
     password = os.environ["PASS"]
     context = ssl.create_default_context()
+    random_int = randint(10, 90)
 
     try:
         with open("email_template_poems.txt", "r", encoding="utf-8") as html_email_template:
             html_email_message = html_email_template.read()
             html_email_message = html_email_message.replace("[poem content]", content)
             html_email_message = html_email_message.replace("[poem title]", poem_title)
+            html_email_message = html_email_message.replace("[random_num]", str(random_int))
 
         msg.attach(MIMEText(html_email_message, "html"))
         msg["From"] = username
