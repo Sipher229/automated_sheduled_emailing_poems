@@ -51,7 +51,10 @@ def get_poem(poem_links: list, poems_number: int) -> Poem:
     if len(poem_links) != 0:
 
         try:
-            poem_to_send_link = poem_links[poems_number]
+            link_index = poems_number
+            poem_to_send_link = poem_links[link_index]
+            while poem_sent_already("sent_poems.txt", poem_to_send_link) and not (link_index < len(poem_links)):
+                poem_to_send_link = poem_links[link_index + 1]
 
             driver.get(poem_to_send_link)
             poem_title = driver.find_element(By.CLASS_NAME, "phPageDetailsTitle").find_element(By.TAG_NAME, "h2").text
@@ -84,7 +87,7 @@ def add_poem_to_file(file_name: str, poem_link: str) -> bool:
         return False
 
 
-def verify_poem_sent(file_name: str, poem_link: str):
+def poem_sent_already(file_name: str, poem_link: str):
     try:
         with open(f"./{file_name}", r) as sent_poems:
             poems = sent_poems.readlines()
