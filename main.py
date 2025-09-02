@@ -53,12 +53,14 @@ def get_poem(poem_links: list, poems_number: int) -> Poem:
         try:
             link_index = poems_number
             poem_to_send_link = poem_links[link_index]
-            while poem_sent_already("sent_poems.txt", poem_to_send_link) and not (link_index < len(poem_links)):
+            while poem_sent_already("sent_poems.txt", poem_to_send_link) and link_index < len(poem_links):
                 poem_to_send_link = poem_links[link_index + 1]
 
             driver.get(poem_to_send_link)
             poem_title = driver.find_element(By.CLASS_NAME, "phPageDetailsTitle").find_element(By.TAG_NAME, "h2").text
             poem_content = driver.find_element(By.CLASS_NAME, "phContent").text
+            if poem_content.lower().count("love") > 5:
+                poem_content = poem_content.split(".")[0]
 
             return Poem(poem_title, poem_content)
         except Exception as e:
@@ -89,14 +91,15 @@ def add_poem_to_file(file_name: str, poem_link: str) -> bool:
 
 def poem_sent_already(file_name: str, poem_link: str):
     try:
-        with open(f"./{file_name}", r) as sent_poems:
+        with open(f"./{file_name}", "r") as sent_poems:
             poems = sent_poems.readlines()
             if poem_link in poems:
                 return True
             else:
                 return False
-    except Exception:
-        print("error verifying poem link to file" + e)
+    except Exception as e:
+        print("error verifying poem link exists in file")
+        print(e)
         return False
 
 
